@@ -1,0 +1,180 @@
+
+DIO_Test.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000ea  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000013e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000013e  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000170  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  000001ac  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000717  00000000  00000000  000001d4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000005be  00000000  00000000  000008eb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000002b6  00000000  00000000  00000ea9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000034  00000000  00000000  00001160  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000033b  00000000  00000000  00001194  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000120  00000000  00000000  000014cf  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000018  00000000  00000000  000015ef  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 3d 00 	call	0x7a	; 0x7a <main>
+  64:	0c 94 73 00 	jmp	0xe6	; 0xe6 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <Initialize_modules>:
+#define LED0_DDR	DDRC
+
+
+void Initialize_modules(){
+		//PA3
+		SET_BIT(Buzzer_DDR,BUZZER);
+  6c:	d3 9a       	sbi	0x1a, 3	; 26
+		//Data Direction of PC2 to be output
+		SET_BIT(LED0_DDR,LED0);
+  6e:	a2 9a       	sbi	0x14, 2	; 20
+		//Data Direct for Button at B0 to be input pin
+		//  DDRB&=~(1<<0);
+		CLEAR_BIT(DDRB,BUTTON0);
+  70:	b8 98       	cbi	0x17, 0	; 23
+		//LED2 on PD3 to be output pin
+		SET_BIT(DDRD,LED2);
+  72:	8b 9a       	sbi	0x11, 3	; 17
+		//button2 PD2
+		CLEAR_BIT(DDRD,BUTTON2);
+  74:	8a 98       	cbi	0x11, 2	; 17
+		
+		//relay PA2 as output
+		SET_BIT(DDRA,2);
+  76:	d2 9a       	sbi	0x1a, 2	; 26
+  78:	08 95       	ret
+
+0000007a <main>:
+}
+int main(void)
+{	
+	Initialize_modules();
+  7a:	0e 94 36 00 	call	0x6c	; 0x6c <Initialize_modules>
+    while (1) 
+    {
+		SET_BIT(PORTA,2);
+  7e:	da 9a       	sbi	0x1b, 2	; 27
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  80:	2f ef       	ldi	r18, 0xFF	; 255
+  82:	83 ed       	ldi	r24, 0xD3	; 211
+  84:	90 e3       	ldi	r25, 0x30	; 48
+  86:	21 50       	subi	r18, 0x01	; 1
+  88:	80 40       	sbci	r24, 0x00	; 0
+  8a:	90 40       	sbci	r25, 0x00	; 0
+  8c:	e1 f7       	brne	.-8      	; 0x86 <main+0xc>
+  8e:	00 c0       	rjmp	.+0      	; 0x90 <main+0x16>
+  90:	00 00       	nop
+		_delay_ms(1000);
+		CLEAR_BIT(PORTD,LED2);
+  92:	93 98       	cbi	0x12, 3	; 18
+  94:	2f ef       	ldi	r18, 0xFF	; 255
+  96:	83 ed       	ldi	r24, 0xD3	; 211
+  98:	90 e3       	ldi	r25, 0x30	; 48
+  9a:	21 50       	subi	r18, 0x01	; 1
+  9c:	80 40       	sbci	r24, 0x00	; 0
+  9e:	90 40       	sbci	r25, 0x00	; 0
+  a0:	e1 f7       	brne	.-8      	; 0x9a <main+0x20>
+  a2:	00 c0       	rjmp	.+0      	; 0xa4 <main+0x2a>
+  a4:	00 00       	nop
+		_delay_ms(1000);
+
+
+		SET_BIT(PORTD,LED2);
+  a6:	93 9a       	sbi	0x12, 3	; 18
+  a8:	2f ef       	ldi	r18, 0xFF	; 255
+  aa:	80 e7       	ldi	r24, 0x70	; 112
+  ac:	92 e0       	ldi	r25, 0x02	; 2
+  ae:	21 50       	subi	r18, 0x01	; 1
+  b0:	80 40       	sbci	r24, 0x00	; 0
+  b2:	90 40       	sbci	r25, 0x00	; 0
+  b4:	e1 f7       	brne	.-8      	; 0xae <main+0x34>
+  b6:	00 c0       	rjmp	.+0      	; 0xb8 <main+0x3e>
+  b8:	00 00       	nop
+		_delay_ms(50);
+		CLEAR_BIT(PORTD,LED2);
+  ba:	93 98       	cbi	0x12, 3	; 18
+  bc:	2f ef       	ldi	r18, 0xFF	; 255
+  be:	80 e7       	ldi	r24, 0x70	; 112
+  c0:	92 e0       	ldi	r25, 0x02	; 2
+  c2:	21 50       	subi	r18, 0x01	; 1
+  c4:	80 40       	sbci	r24, 0x00	; 0
+  c6:	90 40       	sbci	r25, 0x00	; 0
+  c8:	e1 f7       	brne	.-8      	; 0xc2 <main+0x48>
+  ca:	00 c0       	rjmp	.+0      	; 0xcc <main+0x52>
+  cc:	00 00       	nop
+		_delay_ms(50);
+		
+	//check if button is pressed on PD2
+	if(GET_BIT(PIND,BUTTON2)==HIGH){	//get_bit???
+  ce:	82 9b       	sbis	0x10, 2	; 16
+  d0:	d6 cf       	rjmp	.-84     	; 0x7e <main+0x4>
+  d2:	2f ef       	ldi	r18, 0xFF	; 255
+  d4:	86 e7       	ldi	r24, 0x76	; 118
+  d6:	91 e0       	ldi	r25, 0x01	; 1
+  d8:	21 50       	subi	r18, 0x01	; 1
+  da:	80 40       	sbci	r24, 0x00	; 0
+  dc:	90 40       	sbci	r25, 0x00	; 0
+  de:	e1 f7       	brne	.-8      	; 0xd8 <main+0x5e>
+  e0:	00 c0       	rjmp	.+0      	; 0xe2 <main+0x68>
+  e2:	00 00       	nop
+  e4:	cc cf       	rjmp	.-104    	; 0x7e <main+0x4>
+
+000000e6 <_exit>:
+  e6:	f8 94       	cli
+
+000000e8 <__stop_program>:
+  e8:	ff cf       	rjmp	.-2      	; 0xe8 <__stop_program>
