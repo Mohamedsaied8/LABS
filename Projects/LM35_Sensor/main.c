@@ -52,7 +52,7 @@ int main()
 		LCD_Command(0x80);		/* Go to 1st line*/
 		//LCD_String_xy(0,0,"Temperature");
 		 LCD_String("Temperature");
-		celsius = (ADC_Read(1)*4.88);
+		celsius = (ADC_Read(1)*2.5);
 		celsius = (celsius/10.00); //equation of temperature sensor
 		sprintf(Temperature,"%d%cC  ", (int)celsius, degree_sysmbol);               // convert integer value to ASCII string 
 		LCD_Command(0xC0);	

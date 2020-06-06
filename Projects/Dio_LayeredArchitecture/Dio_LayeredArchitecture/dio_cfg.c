@@ -14,11 +14,11 @@ const Dio_PinType pin_cfg[PINCOUNT]={
 /*PA2*/	{Output,STD_LOW},
 /*PA3*/	{Output,STD_LOW},
 /*PA4*/	{Output,STD_LOW},
-/*PA5*/	{Input,STD_HIGH}, //input with pull-up
+/*PA5*/	{Output,STD_HIGH}, //input with pull-up
 /*PA6*/	{Output,STD_LOW},
 /*PA7*/	{Output,STD_LOW},
 /*PB0*/	{Output,STD_LOW},
-/*PB1*/	{Input,STD_HIGH}, //input with pull-up
+/*PB1*/	{Output,STD_HIGH}, 
 /*PB2*/	{Output,STD_LOW},
 /*PB3*/	{Output,STD_LOW},
 /*PB4*/	{Output,STD_LOW},

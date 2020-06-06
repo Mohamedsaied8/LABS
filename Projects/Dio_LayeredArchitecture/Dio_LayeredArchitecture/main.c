@@ -14,20 +14,19 @@
 int main(void)
 {
   Dio_Init();
-  Dio_WriteChannel(Dio_Channel_A0,STD_HIGH);//activate pull-up
+ // Dio_WriteChannel(Dio_Channel_A0,STD_HIGH);//activate pull-up
     while (1) 
     {
-		if(Dio_ReadChannel(Dio_Channel_A0)==STD_LOW){
-			_delay_ms(30);
-			Dio_WritePort(Dio_PortD,0xFF);
-			//Dio_WriteChannel(Dio_Channel_D3,STD_HIGH);
-			_delay_ms(100);
-		}
-		else{
-		    Dio_WritePort(Dio_PortD,0x00);
-		//	Dio_WriteChannel(Dio_Channel_D3,STD_LOW);
-			_delay_ms(100);
-		}
+		//7 segment Enable
+	 Dio_WriteChannel(Dio_Channel_B1,STD_HIGH);
+	 Dio_WriteChannel(Dio_Channel_B2,STD_HIGH);
+	//Display 1
+	for(uint8 num=0;num<10;num++){
+		Dio_WritePort(Dio_PortA,(num<<4));// PA7 PA6 PA5 PA4
+		_delay_ms(1000);
+	}
+	
+	
 		
 		
 	}
